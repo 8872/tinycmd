@@ -1,3 +1,58 @@
+
+
+
+# TODO
+## general
+- write data gathering framework 
+(dump live data to local files which can then be polled by python script running analysis and visualization)
+  - be able to easily view data in a jupyter notebook
+- utility functions to measure loop time
+
+## control
+- kalman filter
+- extended kalman filter
+- particle filter
+- asymmetric trapezoid motion profile (done in python, just needs translation)
+- asymmetric scurve motion profile
+- odometry - april tags sensor fusion
+
+## vision
+- test april tag api accuracy (data gathering framework needs to be done first)
+
+
+## tinycmd
+- add priority to Scheduler
+- test initHardware in CmdOpMode
+- write hardware wrappers
+- write gamepad wrappers
+- embed telemetry into sys/cmd
+- add telemetry to Scheduler
+- test all commands and scheduler
+- complete CmdOpMode
+- add error handling and extensive logging
+- add annotations (@) for hardware initialization (something like @initHardware(name="") or the like)
+- add roadrunner commands and test
+- add support for ftclib commands
+
+## tinycmd visualization
+use nanohttpd to serve a dashboard with live fsm visualization using something like
+[mermaidjs](https://mermaid.js.org/) or 
+[javascript-state-machine](https://github.com/jakesgordon/javascript-state-machine/tree/master)
+
+***
+***
+***
+***
+***
+***
+***
+***
+***
+***
+
+
+
+
 ## NOTICE
 
 This repository contains the public FTC SDK for the POWERPLAY (2022-2023) competition season.
