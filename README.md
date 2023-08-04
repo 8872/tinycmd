@@ -1,12 +1,18 @@
 
 
 
+
+
+
 # TODO
 ## general
 - write data gathering framework 
 (dump live data to local files which can then be polled by python script running analysis and visualization)
   - be able to easily view data in a jupyter notebook
 - utility functions to measure loop time
+- test imu + ndof mode
+- ftc-data: site for data on stuff like 2/3 wheel odom, april tags, imu, etc
+  - provides standard tests that other teams can run so they can contribute their own data and then we can normalize
 
 ## control
 - kalman filter
