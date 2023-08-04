@@ -4,7 +4,6 @@ import fi.iki.elonen.NanoHTTPD;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import fi.iki.elonen.NanoHTTPD;
 
 public class HttpServer extends NanoHTTPD {
 
@@ -27,7 +26,7 @@ public class HttpServer extends NanoHTTPD {
         } else if ("/live".equals(session.getUri())) {
             String mimeType = "text/plain";
             StringBuilder commands = new StringBuilder();
-            for (String cmd : FTCDataLogger.commandList) {
+            for (String cmd : DataLogger.commandList) {
                 commands.append(cmd).append("\n");
             }
             return NanoHTTPD.newFixedLengthResponse(Response.Status.OK, mimeType, commands.toString());

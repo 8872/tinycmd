@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class CmdOpMode extends OpMode {
 
-
+    // TODO add internal timer and method to get current gamemode. 30 seconds it should return AUTO, then TELEOP, then endgame
 
     @Override
     public void init() {

@@ -1,18 +1,37 @@
 
 
+# READ FIRST
+MAKE A [PULL REQUEST](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) 
+UNLESS I SAY OTHERWISE (make a branch with your name, push your code to that, and then on the github site
+there will be an option to make a _pull request_ (PR)) this allows me to be able to review your code before
+merging it into the main repo. prove that you can write good code and ill relax pr enforcement 🤷
 
+[another good resource on pull requests](https://opensource.com/article/19/7/create-pull-request-github)
 
-
-
+before making a pr make sure your branch is always up-to-date with the main branch!!!
+***
 # TODO
+## small stuff (quick and easy bounties)
+- add internal timer and method to get current gamemode to CmdOpMode
+  - till 30 seconds should return auto, then TELEOP, then endgame. use GameMode enum thats in util
+- utility functions to measure loop time
+  - probably just needs to be a command scheduled in the beginning and a command scheduled in th end in CmdOpMode
+
+
 ## general
 - write data gathering framework 
 (dump live data to local files which can then be polled by python script running analysis and visualization)
   - be able to easily view data in a jupyter notebook
-- utility functions to measure loop time
-- test imu + ndof mode
+- test imu + ndof mode and gather all data
+  - make visualizations in python
 - ftc-data: site for data on stuff like 2/3 wheel odom, april tags, imu, etc
   - provides standard tests that other teams can run so they can contribute their own data and then we can normalize
+- add module for python code. should have a venv with matplotlib, numpy, and notebook (jupyter notebook)
+  - be able to read logger data directory and parse raw logs and csvs (if csv you can use pandas or something)
+
+## logger
+- have data be dumped into a standard directory, optionally in CSV form
+- TEST
 
 ## control
 - kalman filter
