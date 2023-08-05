@@ -4,6 +4,8 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.tinycmd.gamepad.GamepadEx;
 import org.firstinspires.ftc.teamcode.tinycmd.sys.Sys;
 
 import java.lang.reflect.Field;
@@ -16,17 +18,34 @@ public class CmdOpMode extends OpMode {
 
     // TODO add internal timer and method to get current gamemode. 30 seconds it should return AUTO, then TELEOP, then endgame
 
+    private static Telemetry activeTelemetry;
+    protected GamepadEx gamepadEx1, gamepadEx2;
+
+    public static Telemetry getActiveTelemetry() {
+        return activeTelemetry;
+    }
+
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        initHardware();
+        activeTelemetry = telemetry;
+
+        gamepadEx1 = new GamepadEx(gamepad1);
+        gamepadEx2 = new GamepadEx(gamepad2);
+
+//        initHardware();
+
+
     }
 
     @Override
     public void loop() {
         Scheduler.tick();
+//        gamepadEx1.update();
+//        gamepadEx2.update();
     }
+
 
     // TODO test initHardware
     @SuppressWarnings("rawtypes")
@@ -42,7 +61,7 @@ public class CmdOpMode extends OpMode {
             // if the field is of type Sys
             if (Sys.class.isAssignableFrom(field.getType())) {
                 System.out.println("sys name is: " + field.getName());
-                HashSet<Field> hardwareFields = new HashSet<>();
+                HashSet<Field> sysFields = new HashSet<>();
                 field.setAccessible(true);
                 Object oc;
                 try {
@@ -54,19 +73,20 @@ public class CmdOpMode extends OpMode {
 
                 System.out.println(Arrays.toString(c.getDeclaredFields()));
                 while (c != null && c != Sys.class) { // Subclasses of Sys
-                    Collections.addAll(hardwareFields, c.getDeclaredFields());
+                    Collections.addAll(sysFields, c.getDeclaredFields());
                     c = c.getSuperclass();
                 }
-                System.out.println("hardwareFields: " + hardwareFields);
-                for (Field hardwareField : hardwareFields) {
+                System.out.println("sysFields: " + sysFields);
+                for (Field sysField : sysFields) {
                     // if the field is of type HardwareDevice
-                    if (HardwareDevice.class.isAssignableFrom(hardwareField.getType())) {
-                        hardwareField.setAccessible(true);
+                    // TODO simplify/merge
+                    if (HardwareDevice.class.isAssignableFrom(sysField.getType())) {
+                        sysField.setAccessible(true);
                         try {
                             // if field is not already set
-                            if (hardwareField.get(oc) == null) {
-                                System.out.println(hardwareField.getType() + ": " + hardwareField.getName());
-                                hardwareField.set(oc, hardwareMap.get(hardwareField.getType(), hardwareField.getName()));
+                            if (sysField.get(oc) == null) {
+                                System.out.println(sysField.getType() + ": " + sysField.getName());
+                                sysField.set(oc, hardwareMap.get(sysField.getType(), sysField.getName()));
                             }
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();

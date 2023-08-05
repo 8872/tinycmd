@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.logger;
 
 import android.annotation.SuppressLint;
-import org.firstinspires.ftc.teamcode.util.GameMode;
+import org.firstinspires.ftc.teamcode.tinycmd.util.GameMode;
 
 import java.io.FileWriter;
 import java.io.IOException;

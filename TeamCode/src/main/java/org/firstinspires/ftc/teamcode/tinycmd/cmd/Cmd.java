@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.tinycmd.cmd;
 
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.tinycmd.CmdOpMode;
+import org.firstinspires.ftc.teamcode.tinycmd.Scheduler;
 import org.firstinspires.ftc.teamcode.tinycmd.sys.Sys;
 
 import java.util.Arrays;
@@ -13,6 +15,8 @@ import java.util.function.BooleanSupplier;
 public abstract class Cmd {
     private final Set<Sys> systems = new HashSet<>();
     private boolean interruptible = true;
+    protected Telemetry telemetry = CmdOpMode.getActiveTelemetry();
+
 
     // TODO somehow incorporate telemetry
 
@@ -46,6 +50,10 @@ public abstract class Cmd {
         return interruptible;
     }
 
+    public void schedule() {
+        Scheduler.add(this);
+    }
+
     public Cmd with(Cmd... cmds) {
         ParallelCmd parallelCmd = new ParallelCmd(this);
         parallelCmd.add(cmds);
@@ -72,6 +80,10 @@ public abstract class Cmd {
             linearCmd.add(this);
         }
         return linearCmd;
+    }
+
+    public Cmd cancelWhen(BooleanSupplier condition) {
+        return new DarwinCmd(this, new StallCmd(condition));
     }
 
     @Override

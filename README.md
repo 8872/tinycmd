@@ -33,6 +33,16 @@ before making a pr make sure your branch is always up-to-date with the main bran
 - have data be dumped into a standard directory, optionally in CSV form
 - TEST
 
+## gamepad
+
+- TEST
+
+### Stick
+
+- add slew rate limiter
+- add different non linear functions for axis
+- add deadzone
+
 ## control
 - kalman filter
 - extended kalman filter
@@ -40,6 +50,7 @@ before making a pr make sure your branch is always up-to-date with the main bran
 - asymmetric trapezoid motion profile (done in python, just needs translation)
 - asymmetric scurve motion profile
 - odometry - april tags sensor fusion
+- slew rate limiter
 
 ## vision
 - test april tag api accuracy (data gathering framework needs to be done first)
@@ -55,7 +66,14 @@ before making a pr make sure your branch is always up-to-date with the main bran
 - test all commands and scheduler
 - complete CmdOpMode
 - add error handling and extensive logging
-- add annotations (@) for hardware initialization (something like @initHardware(name="") or the like)
+- add annotations (@) for hardware initialization. something like
+
+```java
+class Drive extends Sys {
+  @Hardware(name = "leftRight")
+  private DcMotor lf; // instantiates to hardwareMap.get(DcMotor.class, "leftRight")
+}
+```
 - add roadrunner commands and test
 - add support for ftclib commands
 
