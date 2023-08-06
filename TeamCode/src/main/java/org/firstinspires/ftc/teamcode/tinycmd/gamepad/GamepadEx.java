@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.tinycmd.util.Updating;
 import java.util.Arrays;
 
 public class GamepadEx implements Updating {
-    public Input a, b, x, y, dpadUp, dpadDown, dpadLeft, dpadRight, leftBumper, rightBumper, leftStickButton, rightStickButton,
-            start, guide, leftTrigger, rightTrigger;
+    public Input a, b, x, y, dpadUp, dpadDown, dpadLeft, dpadRight, leftBumper, rightBumper, start, guide, leftTrigger,
+            rightTrigger;
     public Stick leftStick, rightStick;
     private final Updating[] toUpdate;
 
@@ -39,8 +39,8 @@ public class GamepadEx implements Updating {
                 new Button(() -> gamepad.right_stick_button)
         );
 
-        toUpdate = new Updating[]{a, b, x, y, dpadUp, dpadDown, dpadLeft, dpadRight, leftBumper, rightBumper,
-                leftStickButton, rightStickButton, start, guide, leftTrigger, rightTrigger, leftStick, rightStick};
+        toUpdate = new Updating[]{a, b, x, y, dpadUp, dpadDown, dpadLeft, dpadRight, leftBumper, rightBumper, start,
+                guide, leftTrigger, rightTrigger, leftStick, rightStick};
     }
 
     // TODO figure out where to call gamepad update

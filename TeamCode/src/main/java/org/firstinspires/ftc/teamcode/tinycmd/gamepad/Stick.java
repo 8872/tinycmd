@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.tinycmd.util.Updating;
 import java.util.function.DoubleSupplier;
 
 // TODO add slew rate limiter
+// TODO add deadzone
 public class Stick implements Updating {
     private DoubleSupplier x, y;
     private final Button button;
@@ -21,6 +22,14 @@ public class Stick implements Updating {
 
     public void invertY() {
         y = () -> -y.getAsDouble();
+    }
+
+    public double getX() {
+        return x.getAsDouble();
+    }
+
+    public double getY() {
+        return y.getAsDouble();
     }
 
     @Override
