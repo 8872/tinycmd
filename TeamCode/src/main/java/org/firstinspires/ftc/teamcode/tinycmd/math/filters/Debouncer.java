@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.function.BooleanSupplier;
 
+// TODO rework to have different debounce time for true -> false and false -> true
 public class Debouncer {
     private final double time;
     private final ElapsedTime timer = new ElapsedTime();

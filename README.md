@@ -33,6 +33,12 @@ before making a pr make sure your branch is always up-to-date with the main bran
 - have data be dumped into a standard directory, optionally in CSV form
 - TEST
 
+## filter
+
+### Debouncer
+
+- rework to have different debounce time for true -> false and false -> true
+
 ## gamepad
 
 - TEST
@@ -56,6 +62,10 @@ before making a pr make sure your branch is always up-to-date with the main bran
 ## vision
 - test april tag api accuracy (data gathering framework needs to be done first)
 
+## annotation
+
+- rework to properly work in an opmode
+  // should get both hardware declared in opmode inheritance and in sys declared in opmode inheritance chain
 
 ## tinycmd
 - add priority to Scheduler
