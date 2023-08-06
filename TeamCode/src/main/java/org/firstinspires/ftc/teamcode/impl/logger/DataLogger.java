@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.logger;
+package org.firstinspires.ftc.teamcode.impl.logger;
 
 import android.annotation.SuppressLint;
 import org.firstinspires.ftc.teamcode.tinycmd.util.GameMode;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.logger;
+package org.firstinspires.ftc.teamcode.impl.logger;
 
 import fi.iki.elonen.NanoHTTPD;
 

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.tinycmd.gamepad.GamepadEx;
 import org.firstinspires.ftc.teamcode.tinycmd.sys.Sys;
+import org.firstinspires.ftc.teamcode.tinycmd.util.annotation.Hardware;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -46,7 +47,37 @@ public class CmdOpMode extends OpMode {
 //        gamepadEx2.update();
     }
 
+    // TODO test annotation Initialization
 
+    /**
+     * Initializes all fields annotated with {@link Hardware}.
+     * ex. {@code @Hardware(name = "motor1") private DcMotor motor;}
+     * @see Hardware
+     */
+    private void initAnnotations() {
+        Class<?> currentClass = this.getClass();
+        while (currentClass != OpMode.class && currentClass != Sys.class && currentClass!= null) {
+            Field[] fields = currentClass.getDeclaredFields();
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(Hardware.class)) {
+                    Hardware annotation = field.getAnnotation(Hardware.class);
+                    String hardwareName = annotation.name();
+                    if (hardwareName.equals("variableName")) {
+                        hardwareName = field.getName();
+                    }
+                    field.setAccessible(true);
+                    try {
+                        Object hardwareInstance = hardwareMap.get(field.getType(), hardwareName);
+                        field.set(this, hardwareInstance);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            currentClass = currentClass.getSuperclass();
+        }
+    }
     // TODO test initHardware
     @SuppressWarnings("rawtypes")
     private void initHardware() {
