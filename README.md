@@ -49,6 +49,7 @@ before making a pr make sure your branch is always up-to-date with the main bran
 - particle filter
 - asymmetric trapezoid motion profile (done in python, just needs translation)
 - asymmetric scurve motion profile
+  - http://www.et.byu.edu/~ered/ME537/Notes/Ch5.pdf
 - odometry - april tags sensor fusion
 - slew rate limiter
 
