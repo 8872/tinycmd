@@ -4,7 +4,14 @@
 MAKE A [PULL REQUEST](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) 
 UNLESS I SAY OTHERWISE (make a branch with your name, push your code to that, and then on the github site
 there will be an option to make a _pull request_ (PR)) this allows me to be able to review your code before
-merging it into the main repo. prove that you can write good code and ill relax pr enforcement 🤷
+merging it into the main repo.
+to make a new branch clone the repo and then do
+
+```
+git checkout -b <your-name>
+```
+
+this will create a new branch and switch to it (`checkout`)
 
 [another good resource on pull requests](https://opensource.com/article/19/7/create-pull-request-github)
 
