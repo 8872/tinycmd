@@ -1,5 +1,3 @@
-
-
 # READ FIRST
 MAKE A [PULL REQUEST](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) 
 UNLESS I SAY OTHERWISE (make a branch with your name, push your code to that, and then on the github site
@@ -36,22 +34,41 @@ before making a pr make sure your branch is always up-to-date with the main bran
 - add module for python code. should have a venv with matplotlib, numpy, and notebook (jupyter notebook)
   - be able to read logger data directory and parse raw logs and csvs (if csv you can use pandas or something)
 
+## python
+
+### motion-profile
+
+- make more tests for Trapezoid profile like in [main.py](python/src/motion-profile/main.py) to ensure
+  that the profile works properly
+  e.g. use different initial/final poses
+
+```python
+a = mp.MotionState(10, 5, 0)
+b = mp.MotionState(30, 0, 0)
+```
+
+and use different velocity/accel/decel constraints
+
+```python
+calculated_distances = [p.calculate_distance(10, 8, 2, t, False) for t in time]
+calculated_velocities = [p.calculate_distance(10, 8, 2, t, True) for t in time]
+```
+
+- implement scurve profile http://www.et.byu.edu/~ered/ME537/Notes/Ch5.pdf
+
 ## logger
 - have data be dumped into a standard directory, optionally in CSV form
 - TEST
 
 ## filter
-
 ### Debouncer
 
 - rework to have different debounce time for true -> false and false -> true
 
 ## gamepad
-
 - TEST
 
 ### Stick
-
 - add slew rate limiter
 - add different non linear functions for axis
 - add deadzone
@@ -68,30 +85,27 @@ before making a pr make sure your branch is always up-to-date with the main bran
 
 ## vision
 - test april tag api accuracy (data gathering framework needs to be done first)
+  - creates tests for tracking accuracy of pose data from april tags from different distances and orientations
 
 ## annotation
 
-- rework to properly work in an opmode
-  // should get both hardware declared in opmode inheritance and in sys declared in opmode inheritance chain
+- ~~rework to properly work in an opmode~~
+  ~~// should get both hardware declared in opmode inheritance and in sys declared in opmode inheritance chain~~
 
 ## tinycmd
 - add priority to Scheduler
-- test initHardware in CmdOpMode
+- ~~test initHardware in CmdOpMode~~
+  - needs to be tested on bot
 - write hardware wrappers
-- write gamepad wrappers
-- embed telemetry into sys/cmd
+- ~~write gamepad wrappers~~
+  - needs to be tested
+- ~~embed telemetry into sys/cmd~~
+  - needs to be tested
 - add telemetry to Scheduler
 - test all commands and scheduler
 - complete CmdOpMode
 - add error handling and extensive logging
-- add annotations (@) for hardware initialization. something like
-
-```java
-class Drive extends Sys {
-  @Hardware(name = "leftRight")
-  private DcMotor lf; // instantiates to hardwareMap.get(DcMotor.class, "leftRight")
-}
-```
+- ~~add annotations (@) for hardware initialization~~
 - add roadrunner commands and test
 - add support for ftclib commands
 
