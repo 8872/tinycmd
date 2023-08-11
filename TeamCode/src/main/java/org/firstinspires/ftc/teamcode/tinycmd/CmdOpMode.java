@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.tinycmd;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.outoftheboxrobotics.photoncore.HAL.Motors.PhotonDcMotor;
+import com.outoftheboxrobotics.photoncore.HAL.PhotonHAL;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
@@ -12,6 +14,7 @@ import org.firstinspires.ftc.teamcode.tinycmd.sys.Sys;
 import org.firstinspires.ftc.teamcode.tinycmd.util.GameMode;
 import org.firstinspires.ftc.teamcode.tinycmd.util.annotation.Hardware;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
+
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashSet;
@@ -34,9 +37,10 @@ public class CmdOpMode extends OpMode {
 
     @Override
     public void init() {
-        PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        PhotonCore.start(hardwareMap);
+        PhotonCore.experimental.setBulkDataUpdateMs(15);
         PhotonCore.experimental.setMaximumParallelCommands(8);
-        PhotonCore.enable();
+
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         activeTelemetry = telemetry;
