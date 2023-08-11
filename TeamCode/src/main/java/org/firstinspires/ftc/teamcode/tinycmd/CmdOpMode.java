@@ -2,20 +2,28 @@ package org.firstinspires.ftc.teamcode.tinycmd;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.tinycmd.gamepad.GamepadEx;
 import org.firstinspires.ftc.teamcode.tinycmd.sys.Sys;
+import org.firstinspires.ftc.teamcode.tinycmd.util.GameMode;
 import org.firstinspires.ftc.teamcode.tinycmd.util.annotation.Hardware;
-
+import com.outoftheboxrobotics.photoncore.PhotonCore;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashSet;
 
 public class CmdOpMode extends OpMode {
+    private ElapsedTime timer;
 
+    private double loopCycle = 0;
+    private double loopTime = 0;
     // TODO add internal timer and method to get current gamemode. 30 seconds it should return AUTO, then TELEOP, then endgame
+
+    private GameMode gameMode = GameMode.AUTO;
 
     private static Telemetry activeTelemetry;
     protected GamepadEx gamepadEx1, gamepadEx2;
@@ -26,6 +34,9 @@ public class CmdOpMode extends OpMode {
 
     @Override
     public void init() {
+        PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        PhotonCore.experimental.setMaximumParallelCommands(8);
+        PhotonCore.enable();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         activeTelemetry = telemetry;
@@ -40,9 +51,37 @@ public class CmdOpMode extends OpMode {
 
     @Override
     public void loop() {
+        if (timer == null) timer = new ElapsedTime();
+        if (timer.seconds() > 30 && gameMode == GameMode.AUTO) gameMode = GameMode.TELEOP;
+        if (timer.seconds() > 120 && gameMode == GameMode.TELEOP) gameMode = GameMode.ENDGAME;
+
         Scheduler.tick();
+        double loop = System.nanoTime();
+        loopCycle = (loop - loopTime) / 1e9;
+        loopTime = loop;
+        PhotonCore.CONTROL_HUB.clearBulkCache();
 //        gamepadEx1.update();
 //        gamepadEx2.update();
+    }
+    /**
+     * @author DevMello
+     * @since 0.0.4
+     * Returns the time in seconds since the last loop cycle.
+     * @return the time it took to run the last loop in seconds
+     *
+     * */
+    public double getLoopCycle() {
+        return loopCycle;
+    }
+
+    /**
+     * @author DevMello
+     * @since 0.0.4
+     * Returns the current game mode.
+     * @return
+     */
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
     // TODO test annotation Initialization
