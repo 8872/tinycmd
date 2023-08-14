@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.tinycmd.logger;
 
 import android.annotation.SuppressLint;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import org.firstinspires.ftc.teamcode.tinycmd.logger.util.storage.Storage;
 import org.firstinspires.ftc.teamcode.tinycmd.logger.util.time.TimeUtils;
 import org.firstinspires.ftc.teamcode.tinycmd.util.GameMode;
@@ -34,14 +36,14 @@ public class DataLogger {
     public Storage storage;
     public GameMode gameMode;
 
+
     /**
      * Creates a new DataLogger with the specified prefix name.
-     * @param gameMode The gameMode to know when reading logs.
      * @see GameMode
      * initializing the wrong gameMode will cause the logger to not work properly when reading through the data.
      */
-    public DataLogger(GameMode gameMode) {
-        this.gameMode = gameMode;
+    public DataLogger() {
+        Logger.addLogAdapter(new AndroidLogAdapter());
         storage = new Storage();
         commandList = new ArrayList<>();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
@@ -124,7 +126,7 @@ public class DataLogger {
      * Set the game mode for the logger.
      * Gamemode should be set when creating the logger. This method should not be called.
      * If you use this then you have figured out how to transition directly from Auto to TeleOp.
-     * @see #DataLogger(GameMode)
+     * @see #DataLogger()
      * @see GameMode
      * @param gameMode
      */
