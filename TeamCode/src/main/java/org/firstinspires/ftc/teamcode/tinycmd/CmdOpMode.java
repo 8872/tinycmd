@@ -63,7 +63,6 @@ public class CmdOpMode extends OpMode {
         double loop = System.nanoTime();
         loopCycle = (loop - loopTime) / 1e9;
         loopTime = loop;
-
 //        gamepadEx1.update();
 //        gamepadEx2.update();
     }

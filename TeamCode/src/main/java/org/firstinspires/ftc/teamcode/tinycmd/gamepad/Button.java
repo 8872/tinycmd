@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.tinycmd.gamepad;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.tinycmd.math.filters.Debouncer;
+import org.firstinspires.ftc.teamcode.tinycmd.vision.math.filters.Debouncer;
 
 import java.util.function.BooleanSupplier;
 

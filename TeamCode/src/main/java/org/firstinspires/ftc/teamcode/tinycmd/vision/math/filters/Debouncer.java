@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tinycmd.math.filters;
+package org.firstinspires.ftc.teamcode.tinycmd.vision.math.filters;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 

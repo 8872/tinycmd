@@ -1,19 +1,14 @@
 package org.firstinspires.ftc.teamcode.tinycmd.logger;
 
 import android.annotation.SuppressLint;
-import com.outoftheboxrobotics.photoncore.HAL.Motors.PhotonDcMotor;
-import com.outoftheboxrobotics.photoncore.PhotonCore;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
-import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.tinycmd.logger.util.annotation.Log;
-import org.firstinspires.ftc.teamcode.tinycmd.logger.util.storage.CSVWriterUtil;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import org.firstinspires.ftc.teamcode.tinycmd.logger.util.storage.Storage;
 import org.firstinspires.ftc.teamcode.tinycmd.logger.util.time.TimeUtils;
 import org.firstinspires.ftc.teamcode.tinycmd.sys.Sys;
 import org.firstinspires.ftc.teamcode.tinycmd.util.GameMode;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -30,36 +25,35 @@ import java.util.TimeZone;
  * @see org.firstinspires.ftc.teamcode.tinycmd.CmdOpMode
  */
 public class DataLogger {
-
+    public boolean hasStarted = false;
     public boolean debug = false;
     public String author = "8872";
     public String version = "v0.0.1 Beta";
 
     public String prefixString = "[" + author + "][" + version + "] ";
     public static List<String> commandList;
-    private CSVWriterUtil logFile;
+    private FileWriter logFile;
     private HttpServer server;
     private String currentDateTime;
     public Storage storage;
     public GameMode gameMode;
+
 
     private static List<String> futureDataPoints = new ArrayList<>();
     private static List<HardwareDevice> hardwareDevices = new ArrayList<>();
 
     /**
      * Creates a new DataLogger with the specified prefix name.
-     * @param gameMode The gameMode to know when reading logs.
      * @see GameMode
      * initializing the wrong gameMode will cause the logger to not work properly when reading through the data.
      */
-    public DataLogger(GameMode gameMode) {
-        futureDataPoints.clear();
-        this.gameMode = gameMode;
-        try {
-            logFile = new CSVWriterUtil();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public DataLogger() {
+        Logger.addLogAdapter(new AndroidLogAdapter());
+        storage = new Storage();
+        commandList = new ArrayList<>();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+        currentDateTime = dateFormat.format(new Date());
     }
 
     /**
@@ -72,7 +66,6 @@ public class DataLogger {
         writeDataPoints(futureDataPoints.toArray(new String[futureDataPoints.size()]));
         startHttpServer();
     }
-
 
     /**
      * Stops the logger and closes the log file.
@@ -90,7 +83,14 @@ public class DataLogger {
      * This method should not be called manually.
      * @see #start()
      */
-
+    private void openLogFile() {
+        try {
+            String filename = storage.getDir() + "/log_" + currentDateTime + ".txt";
+            logFile = new FileWriter(filename, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Closes the log file.
@@ -99,7 +99,13 @@ public class DataLogger {
      * @see #stop()
      */
     private void closeLogFile() {
-
+        try {
+            if (logFile != null) {
+                logFile.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -115,7 +121,7 @@ public class DataLogger {
      * Set the game mode for the logger.
      * Gamemode should be set when creating the logger. This method should not be called.
      * If you use this then you have figured out how to transition directly from Auto to TeleOp.
-     * @see #DataLogger(GameMode)
+     * @see #DataLogger()
      * @see GameMode
      * @param gameMode
      */
