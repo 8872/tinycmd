@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.tinycmd.logger.util.exception;
 
-import org.firstinspires.ftc.teamcode.tinycmd.logger.util.exception.exceptions.ParentLoggerException;
+import com.orhanobut.logger.Logger;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.NotNull;
+
+import java.io.IOException;
 
 public class ExceptionCatcher {
 
@@ -10,15 +13,27 @@ public class ExceptionCatcher {
 
     }
 
-    public interface LoggerExceptionRunnable{
-        void run() throws ParentLoggerException;
+    public interface IOExceptionRunnable{
+        void run() throws IOException;
     }
 
-    public void catchIO(LoggerExceptionRunnable runnable) {
+    public void catchIO(IOExceptionRunnable runnable) {
         try {
             runnable.run();
-        } catch (ParentLoggerException exception) {
-            System.out.println(exception.getMessage());
+        } catch (IOException exception) {
+            if (NotNull.isAnythingNull(exception)) Logger.e(exception, exception.getMessage());
+        }
+    }
+
+    public interface IllegalAccessExceptionRunnable{
+        void run() throws IllegalAccessException;
+    }
+
+    public void catchIllegalAccess(IllegalAccessExceptionRunnable runnable) {
+        try {
+            runnable.run();
+        } catch (IllegalAccessException exception) {
+            if (NotNull.isAnythingNull(exception)) Logger.e(exception, exception.getMessage());
         }
     }
  }

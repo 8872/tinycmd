@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.util;
+package org.firstinspires.ftc.teamcode.tinycmd.math.util;
 
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.PointXY;
+import org.firstinspires.ftc.teamcode.tinycmd.math.geometry.PointXY;
 
 public interface Equation {
     /**

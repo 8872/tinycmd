@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.util;
+package org.firstinspires.ftc.teamcode.tinycmd.math.util;
 
 import com.orhanobut.logger.Logger;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.exceptions.ValidationException;
+import org.firstinspires.ftc.teamcode.tinycmd.math.geometry.exceptions.ValidationException;
 
 public class ValidationUtils {
     private static final String NO_NAME = "parameter name not specified";

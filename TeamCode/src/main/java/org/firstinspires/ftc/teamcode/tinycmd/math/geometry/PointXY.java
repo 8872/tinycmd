@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry;
+package org.firstinspires.ftc.teamcode.tinycmd.math.geometry;
 
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.exceptions.InvalidToleranceException;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.ArrayUtils;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.Equals;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.StringUtils;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.ValidationUtils;
+import org.firstinspires.ftc.teamcode.tinycmd.math.geometry.exceptions.InvalidToleranceException;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.ArrayUtils;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.Equals;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.StringUtils;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.ValidationUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;

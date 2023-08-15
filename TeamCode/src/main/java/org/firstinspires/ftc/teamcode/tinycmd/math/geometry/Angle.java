@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry;
+package org.firstinspires.ftc.teamcode.tinycmd.math.geometry;
 
 import com.orhanobut.logger.Logger;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.exceptions.InvalidToleranceException;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.exceptions.NullAngleException;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.Equals;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.Rounding;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.StringUtils;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.ValidationUtils;
+import org.firstinspires.ftc.teamcode.tinycmd.math.geometry.exceptions.InvalidToleranceException;
+import org.firstinspires.ftc.teamcode.tinycmd.math.geometry.exceptions.NullAngleException;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.Equals;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.Rounding;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.StringUtils;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.ValidationUtils;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.util;
+package org.firstinspires.ftc.teamcode.tinycmd.math.util;
 
 
 import java.math.BigDecimal;

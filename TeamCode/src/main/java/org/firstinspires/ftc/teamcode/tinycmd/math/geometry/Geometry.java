@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry;
+package org.firstinspires.ftc.teamcode.tinycmd.math.geometry;
 
 public class Geometry {
     public static final double METERS_TO_INCHES = 39.37;

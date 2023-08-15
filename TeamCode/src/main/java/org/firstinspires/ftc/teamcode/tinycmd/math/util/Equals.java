@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.util;
+package org.firstinspires.ftc.teamcode.tinycmd.math.util;
 
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.Angle;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.exceptions.InvalidToleranceException;
+import org.firstinspires.ftc.teamcode.tinycmd.math.geometry.Angle;
+import org.firstinspires.ftc.teamcode.tinycmd.math.geometry.exceptions.InvalidToleranceException;
 
 public class Equals {
 

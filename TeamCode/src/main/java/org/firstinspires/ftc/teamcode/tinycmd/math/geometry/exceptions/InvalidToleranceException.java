@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.exceptions;
+package org.firstinspires.ftc.teamcode.tinycmd.math.geometry.exceptions;
 
 import com.orhanobut.logger.Logger;
 

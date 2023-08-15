@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.exceptions;
+package org.firstinspires.ftc.teamcode.tinycmd.math.geometry.exceptions;
 
 
 import com.orhanobut.logger.Logger;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry.Angle;
+import org.firstinspires.ftc.teamcode.tinycmd.math.geometry.Angle;
 
 public class NullAngleException extends RuntimeException {
 

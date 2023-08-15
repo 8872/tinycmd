@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.filters;
+package org.firstinspires.ftc.teamcode.tinycmd.math.filters;
 
 public class LowPassFilter {
     private final double dt;

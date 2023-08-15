@@ -3,6 +3,14 @@ package org.firstinspires.ftc.teamcode.tinycmd.logger;
 import android.annotation.SuppressLint;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.outoftheboxrobotics.photoncore.HAL.Motors.PhotonDcMotor;
+import com.outoftheboxrobotics.photoncore.PhotonCore;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.tinycmd.logger.util.annotation.Log;
+import org.firstinspires.ftc.teamcode.tinycmd.logger.util.exception.ExceptionCatcher;
 import org.firstinspires.ftc.teamcode.tinycmd.logger.util.storage.Storage;
 import org.firstinspires.ftc.teamcode.tinycmd.logger.util.time.TimeUtils;
 import org.firstinspires.ftc.teamcode.tinycmd.sys.Sys;
@@ -12,10 +20,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * A simple logger for FTC robots.
@@ -38,6 +43,7 @@ public class DataLogger {
     public Storage storage;
     public GameMode gameMode;
 
+    public ExceptionCatcher exceptionCatcher = new ExceptionCatcher();
 
     private static List<String> futureDataPoints = new ArrayList<>();
     private static List<HardwareDevice> hardwareDevices = new ArrayList<>();
@@ -162,11 +168,11 @@ public class DataLogger {
      * It takes all the data points that needs to be logged and writes them to the log file.
      */
     public void writeDataPoints(String[] data) {
-        logFile.write(data);
+        exceptionCatcher.catchIO(() -> logFile.write(Arrays.toString(data)));
     }
 
     public void writeDataPoints(List<String> data) {
-        logFile.write(data.toArray(new String[data.size()]));
+        exceptionCatcher.catchIO(() -> logFile.write(Arrays.toString(data.toArray(new String[0]))));
     }
 
     public List<String> getCommandList() {

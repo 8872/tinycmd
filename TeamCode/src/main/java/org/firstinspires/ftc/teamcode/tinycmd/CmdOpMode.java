@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.tinycmd.gamepad.GamepadEx;
+import org.firstinspires.ftc.teamcode.tinycmd.logger.util.exception.ExceptionCatcher;
 import org.firstinspires.ftc.teamcode.tinycmd.sys.Sys;
 import org.firstinspires.ftc.teamcode.tinycmd.util.GameMode;
 import org.firstinspires.ftc.teamcode.tinycmd.util.annotation.Hardware;
@@ -31,6 +32,7 @@ public class CmdOpMode extends OpMode {
     private static Telemetry activeTelemetry;
     protected GamepadEx gamepadEx1, gamepadEx2;
 
+    protected ExceptionCatcher exceptionCatcher = new ExceptionCatcher();
     public static Telemetry getActiveTelemetry() {
         return activeTelemetry;
     }
@@ -112,6 +114,7 @@ public class CmdOpMode extends OpMode {
             } else if (Sys.class.isAssignableFrom(opmodeField.getType())) {
                 Object sysObj;
                 opmodeField.setAccessible(true);
+
                 try {
                     sysObj = opmodeField.get(this);
                 } catch (IllegalAccessException e) {

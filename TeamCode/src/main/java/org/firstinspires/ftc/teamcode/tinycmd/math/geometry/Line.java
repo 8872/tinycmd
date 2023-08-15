@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry;
+package org.firstinspires.ftc.teamcode.tinycmd.math.geometry;
 
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.Equals;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.Equals;
 
 import java.io.Serializable;
 

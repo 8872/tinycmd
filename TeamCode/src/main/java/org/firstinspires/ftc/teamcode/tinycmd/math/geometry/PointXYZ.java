@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.tinycmd.vision.math.geometry;
+package org.firstinspires.ftc.teamcode.tinycmd.math.geometry;
 
 import com.orhanobut.logger.Logger;
 
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.ArrayUtils;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.Equals;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.StringUtils;
-import org.firstinspires.ftc.teamcode.tinycmd.vision.math.util.ValidationUtils;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.ArrayUtils;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.Equals;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.StringUtils;
+import org.firstinspires.ftc.teamcode.tinycmd.math.util.ValidationUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -360,7 +360,7 @@ public class PointXYZ extends PointXY {
             double tolerance,
             Angle angleTolerance
     ) {
-        if (!PointXY.isNear(a, b, tolerance)) return false;
+        if (!isNear(a, b, tolerance)) return false;
 
         return Equals.soft(a.z, b.z, angleTolerance);
     }
