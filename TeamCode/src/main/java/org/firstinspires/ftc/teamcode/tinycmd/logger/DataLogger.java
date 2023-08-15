@@ -1,12 +1,21 @@
 package org.firstinspires.ftc.teamcode.tinycmd.logger;
 
 import android.annotation.SuppressLint;
+import com.outoftheboxrobotics.photoncore.HAL.Motors.PhotonDcMotor;
+import com.outoftheboxrobotics.photoncore.PhotonCore;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.tinycmd.logger.util.annotation.Log;
+import org.firstinspires.ftc.teamcode.tinycmd.logger.util.storage.CSVWriterUtil;
 import org.firstinspires.ftc.teamcode.tinycmd.logger.util.storage.Storage;
 import org.firstinspires.ftc.teamcode.tinycmd.logger.util.time.TimeUtils;
+import org.firstinspires.ftc.teamcode.tinycmd.sys.Sys;
 import org.firstinspires.ftc.teamcode.tinycmd.util.GameMode;
 
-import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,18 +30,21 @@ import java.util.TimeZone;
  * @see org.firstinspires.ftc.teamcode.tinycmd.CmdOpMode
  */
 public class DataLogger {
-    public boolean hasStarted = false;
+
     public boolean debug = false;
     public String author = "8872";
     public String version = "v0.0.1 Beta";
 
     public String prefixString = "[" + author + "][" + version + "] ";
     public static List<String> commandList;
-    private FileWriter logFile;
+    private CSVWriterUtil logFile;
     private HttpServer server;
     private String currentDateTime;
     public Storage storage;
     public GameMode gameMode;
+
+    private static List<String> futureDataPoints = new ArrayList<>();
+    private static List<HardwareDevice> hardwareDevices = new ArrayList<>();
 
     /**
      * Creates a new DataLogger with the specified prefix name.
@@ -41,12 +53,13 @@ public class DataLogger {
      * initializing the wrong gameMode will cause the logger to not work properly when reading through the data.
      */
     public DataLogger(GameMode gameMode) {
+        futureDataPoints.clear();
         this.gameMode = gameMode;
-        storage = new Storage();
-        commandList = new ArrayList<>();
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-        currentDateTime = dateFormat.format(new Date());
+        try {
+            logFile = new CSVWriterUtil();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -55,9 +68,11 @@ public class DataLogger {
      * THIS MUST BE CALLED AT START OF AUTO AND TELEOP PROGRAMS OR LOGGER WILL NOT WORK
      */
     public void start() {
-        openLogFile();
+        //writeDataPoints should write all the datapoints in futureDataPoints
+        writeDataPoints(futureDataPoints.toArray(new String[futureDataPoints.size()]));
         startHttpServer();
     }
+
 
     /**
      * Stops the logger and closes the log file.
@@ -75,14 +90,7 @@ public class DataLogger {
      * This method should not be called manually.
      * @see #start()
      */
-    private void openLogFile() {
-        try {
-            String filename = storage.getDir() + "/log_" + currentDateTime + ".txt";
-            logFile = new FileWriter(filename, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * Closes the log file.
@@ -91,13 +99,7 @@ public class DataLogger {
      * @see #stop()
      */
     private void closeLogFile() {
-        try {
-            if (logFile != null) {
-                logFile.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     /**
@@ -106,18 +108,7 @@ public class DataLogger {
      * @Todo: Add multiple data types ex. int, double, etc.
      */
     public void log(String data) {
-        if (hasStarted) {
             commandList.add(TimeUtils.getDate()+prefixString +data); // Store the data in the list
-            try {
-                if (logFile != null) {
-                    logFile.write(TimeUtils.getDate()+prefixString +data + "\n");
-                    logFile.flush();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
     }
 
     /**
@@ -160,11 +151,76 @@ public class DataLogger {
         }
     }
 
+    /**
+     * This method is written to be called when the program is started.
+     * It takes all the data points that needs to be logged and writes them to the log file.
+     */
+    public void writeDataPoints(String[] data) {
+        logFile.write(data);
+    }
+
+    public void writeDataPoints(List<String> data) {
+        logFile.write(data.toArray(new String[data.size()]));
+    }
+
     public List<String> getCommandList() {
         return commandList;
     }
 
     public String getCurrentDateTime() {
         return currentDateTime;
+    }
+
+    /**
+     * This method is written to be called when the a class needs to be added to a logger.
+     * The process method should be finished calling before the start method is called.
+     * Logger cannot be logging at all moments otherwise it will be taking up too much processing power. We can limit this by letting the logger log every 100ms or so.
+     * @param obj
+     */
+    public static void process(Object obj) {
+        if (obj.getClass().isAnnotationPresent(Log.class)) {
+            if (obj instanceof Sys) {
+                Sys sys = (Sys) obj;
+                List<HardwareDevice> dataPoints = new ArrayList<>();
+
+                Field[] fields = obj.getClass().getDeclaredFields();
+                for (Field field : fields) {
+                    if (HardwareDevice.class.isAssignableFrom(field.getType())) {
+                        try {
+                            HardwareDevice device = (HardwareDevice) field.get(obj);
+                            dataPoints.add(device);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                hardwareDevices.addAll(dataPoints);
+                for (HardwareDevice device : dataPoints) {
+                    futureDataPoints.add(device.getDeviceName());
+                }
+            }
+        }
+    }
+
+    /**
+     * Automatic recording of data.
+     * Any class that implements Sys class and has the @Log annotation will have its data recorded.
+     * This method should be called in opMode loop
+     * make sure to call process method before calling this method
+     * @see Sys
+     * @see Log
+     * @see #process(Object)
+     */
+    public void liveRecording() {
+        List<String> data = new ArrayList<>();
+        for(HardwareDevice device: hardwareDevices) {
+            if(device instanceof DcMotor) {
+                PhotonDcMotor motor = PhotonCore.getControlHubHAL().getMotor(((DcMotor) device).getPortNumber());
+                data.add("Power: " + ((DcMotor) device).getPower() + "; Encoder: " + ((DcMotor) device).getCurrentPosition() + "; Current: " + motor.getCurrentAsync(CurrentUnit.AMPS));
+            }
+            if(device instanceof Servo) {
+                data.add("Position: " + ((Servo) device).getPosition() + "; Direction: "+ ((Servo) device).getDirection());
+            }
+        }
     }
 }

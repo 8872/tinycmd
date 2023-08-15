@@ -21,5 +21,6 @@ dependencies {
     implementation 'org.firstinspires.ftc:Vision:8.2.0'
     implementation 'com.github.Eeshwar-Krishnan:PhotonFTC:v3.0.0-ALPHA'
     implementation 'com.acmerobotics.dashboard:dashboard:0.4.9'
+    implementation("com.opencsv:opencsv:4.1")
 }
 
