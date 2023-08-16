@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.tinycmd.vision;
 import com.acmerobotics.roadrunner.localization.Localizer;
 import org.firstinspires.ftc.teamcode.tinycmd.math.geometry.PointXYZ;
 
-public class VisionLocalizer {
+public abstract class VisionLocalizer {
 
     public PointXYZ pos;
     public PointXYZ getRobotPosition() {
@@ -13,4 +13,7 @@ public class VisionLocalizer {
         this.pos = pos;
     }
 
+    public abstract PointXYZ getPos();
+
+    public abstract void update();
 }
